@@ -18,7 +18,16 @@ router.post('/new', (req, res) => {
     })
 })
 
-
+router.patch('/:id', (req, res) => {
+  var newId = req.params.id
+  var changeBrand = req.body.brand
+  var changeNumber = req.body.number
+  var changeType = req.body.type
+  knex('clubs').where('id', newId).update({brand:changeBrand, number:changeNumber, type:changeType}).returning(['id', 'brand', 'type', 'number'])
+    .then(result => {
+      res.send(result)
+    })
+})
 
 
 
