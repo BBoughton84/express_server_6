@@ -8,6 +8,14 @@ router.get('/', (req, res) => {
     })
 })
 
+router.get('/:id', (req, res) => {
+  var getId = req.params.id
+  knex('clubs').where('id', getId)
+    .then(result => {
+      res.send(result)
+    })
+})
+
 router.post('/new', (req, res) => {
   var newBrand = req.body.brand
   var newNumber = req.body.number
@@ -26,6 +34,14 @@ router.patch('/:id', (req, res) => {
   knex('clubs').where('id', newId).update({brand:changeBrand, number:changeNumber, type:changeType}).returning(['id', 'brand', 'type', 'number'])
     .then(result => {
       res.send(result)
+    })
+})
+
+router.delete('/:id', (req, res) => {
+  var deleteId = req.params.id
+  knex('clubs').where('id', deleteId).del()
+    .then(result => {
+      res.send(200)
     })
 })
 
