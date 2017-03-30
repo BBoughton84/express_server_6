@@ -8,6 +8,17 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/new', (req, res) => {
+  var newBrand = req.body.brand
+  var newNumber = req.body.number
+  var newType = req.body.type
+  knex('clubs').insert({brand:newBrand, number:newNumber, type:newType}).returning(['id', 'brand', 'number', 'type'])
+    .then(result => {
+      res.send(result)
+    })
+})
+
+
 
 
 
